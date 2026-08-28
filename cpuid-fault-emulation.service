@@ -1,0 +1,15 @@
+[Unit]
+Description=CPUID Fault Emulation for DenuvOwO
+Before=display-manager.service
+Before=libvirtd.service
+Before=virtqemud.service
+After=basic.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c 'modprobe -r kvm_amd 2>/dev/null || true; modprobe -r kvm 2>/dev/null || true; modprobe cpuid_fault_emulation 2>/dev/null || true'
+ExecStop=/bin/sh -c 'modprobe -r cpuid_fault_emulation 2>/dev/null || true'
+
+[Install]
+WantedBy=multi-user.target
