@@ -23,5 +23,16 @@ Enable the Copr repository and install the AKMOD package:
 ```bash
 sudo curl -sL https://copr.fedorainfracloud.org/coprs/ascendxps/AscendXP/repo/fedora-$(rpm -E %fedora)/ascendxps-AscendXP-fedora-$(rpm -E %fedora).repo -o /etc/yum.repos.d/_copr_ascendxps-AscendXP.repo
 sudo rpm-ostree install akmod-cpuid-fault-emulation cpuid-fault-emulation-kmod-common
+```
+
+**Reboot the system to apply the changes:**
+
+```bash
+systemctl reboot
+```
+
+**After reboot, enable and start the CPUID fault emulation service:**
+
+```bash
 sudo systemctl enable --now cpuid-fault-emulation.service
 ```
