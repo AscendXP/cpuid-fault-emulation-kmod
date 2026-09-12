@@ -72,7 +72,7 @@ if grep -qw cpuid_fault /proc/cpuinfo; then
     echo "Native CPUID faulting detected; package is unnecessary."
 else
     echo "Native CPUID faulting not detected; enabling CPUID fault emulation service."
-    if [ -x /usr/bin/systemctl ]; then
+    if [ "$1" -eq 1 ] && [ -x /usr/bin/systemctl ]; then
         /usr/bin/systemctl enable --now cpuid-fault-emulation.service || :
     fi
     echo -e "\033[31mREMINDER:\033[0m For Secure Boot: ensure your akmods MOK key is enrolled in shim via mokutil."
