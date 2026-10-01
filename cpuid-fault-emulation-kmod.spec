@@ -4,13 +4,14 @@
 %global __akmods_install true
 %endif
 Name:           cpuid-fault-emulation-kmod
-Version:        1
+Version:        1.0.1
 Release:        1%{?dist}
 Summary:        Linux CPUID fault emulation kernel module
 License:        GPL-2.0-only
-URL:            https://github.com/AscendXP/cpuid-test
+URL:            https://github.com/AscendXP/cpuid-fault-emulation-kmod
 Source0:        cpuid_fault_emulation.zip
 Source1:        cpuid-fault-emulation.service
+Source2:        10-cpuid-fault-emulation.rules
 BuildRequires:  kmodtool
 BuildRequires:  unzip
 BuildRequires:  systemd-rpm-macros
@@ -53,6 +54,8 @@ done
 
 mkdir -p %{buildroot}%{_unitdir}
 install -p -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/cpuid-fault-emulation.service
+mkdir -p %{buildroot}%{_datadir}/polkit-1/rules.d
+install -p -m 644 %{SOURCE2} %{buildroot}%{_datadir}/polkit-1/rules.d/10-cpuid-fault-emulation.rules
 
 %post common
 %systemd_post cpuid-fault-emulation.service
@@ -80,5 +83,5 @@ fi
 
 %files common
 %{_unitdir}/cpuid-fault-emulation.service
-
+%{_datadir}/polkit-1/rules.d/10-cpuid-fault-emulation.rules
 %changelog
