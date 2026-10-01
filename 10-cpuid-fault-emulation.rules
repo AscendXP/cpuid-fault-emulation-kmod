@@ -1,0 +1,11 @@
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.systemd1.manage-units" &&
+        action.lookup("unit") == "cpuid-fault-emulation.service") {
+        var verb = action.lookup("verb");
+        if (verb == "start" || verb == "stop" || verb == "restart") {
+            if (subject.isInGroup("wheel")) {
+                return polkit.Result.YES;
+            }
+        }
+    }
+});
